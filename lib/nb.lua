@@ -15,6 +15,7 @@ nb.none = player_lib:new()
 -- Call from your init method.
 function nb:init()
     refcounts = {}
+    self.added = false
     self:stop_all()
 end
 
@@ -76,12 +77,35 @@ function nb:add_param(param_id, param_name)
     end)
 end
 
+local function pairsByKeys (t, f)
+    local a = {}
+    for n in pairs(t) do table.insert(a, n) end
+    table.sort(a, f)
+    local i = 0      -- iterator variable
+    local iter = function ()   -- iterator function
+      i = i + 1
+      if a[i] == nil then return nil
+      else return a[i], t[a[i]]
+      end
+    end
+    return iter
+end
+
+function nb:add_player_params()
+    if self.added then return end
+    for name, player in pairsByKeys(self:get_players()) do
+        player:add_params()
+    end
+    self.added = true
+end
+
 -- Return all the players in an object by name. 
 function nb:get_players()
     local ret = {}
     for k, v in pairs(self.players) do
         ret[k] = player_lib:new(v)
     end
+    table.sort(ret)
     return ret
 end
 

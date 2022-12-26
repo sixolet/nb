@@ -2,8 +2,8 @@ local player = {
     length = 1.0
 }
 
-if refcounts == nil then
-    refcounts = {}
+if nb_player_refcounts == nil then
+    nb_player_refcounts = {}
 end
 
 -- Wrap an object to be a full "player", with default implementations of all
@@ -13,6 +13,10 @@ function player:new(o)
     setmetatable(o, self)
     self.__index = self
     return o
+end
+
+-- Implement this to add params from your player to the script
+function player:add_params()
 end
 
 -- Implement to do midi-style note-on. If you only implement play_note,
@@ -77,11 +81,11 @@ end
 -- Private.
 function player:count_up()
     if self.name ~= nil then
-        if refcounts[self.name] == nil then
-            refcounts[self.name] = 1
+        if nb_player_refcounts[self.name] == nil then
+            nb_player_refcounts[self.name] = 1
             self:active()
         else
-            refcounts[self.name] = refcounts[self.name] + 1
+            nb_player_refcounts[self.name] = nb_player_refcounts[self.name] + 1
         end
     end
 end
@@ -89,10 +93,10 @@ end
 -- Private
 function player:count_down()
     if self.name ~= nil then
-        if refcounts[self.name] ~= nil then
-            refcounts[self.name] = refcounts[self.name] - 1
-            if refcounts[self.name] == 0 then
-                refcounts[self.name] = nil
+        if nb_player_refcounts[self.name] ~= nil then
+            nb_player_refcounts[self.name] = nb_player_refcounts[self.name] - 1
+            if nb_player_refcounts[self.name] == 0 then
+                nb_player_refcounts[self.name] = nil
                 self:inactive()
             end
         end
