@@ -5,6 +5,7 @@ g = grid.connect()
 grid_dirty = true
 
 function init()
+    nb:init()
     nb:add_param("voice", "voice")
     clock.run(function()
         while true do
