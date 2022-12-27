@@ -20,6 +20,10 @@ git commit -m 'update submodules'
 Then you can edit your script to use the `nb` library. Some highlights:
 
 ```
+nb:init() -- run this first, from your init method.
+```
+
+```
 nb:add_param("voice_id", "voice") -- adds a voice selector param to your script
 ```
 
@@ -30,4 +34,4 @@ local player = params:lookup_param("voice_id"):get_player()
 player.play_note(48, 0.5, 0.2) 
 ```
 
-
+MIDI devices that are currently connected while the script is started will be available for selection as vocies. Other vocies depend on any voices included with the script or installed as mods.
