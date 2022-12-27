@@ -7,6 +7,7 @@ grid_dirty = true
 function init()
     nb:init()
     nb:add_param("voice", "voice")
+    nb:add_player_params()
     clock.run(function()
         while true do
             if grid_dirty then
