@@ -35,7 +35,7 @@ function player:pitch_bend(note, amount)
 end
 
 -- Optional. Modulate the voice, in whatever way seems best. Range 0-1.
-function player:modulate(note, val)
+function player:modulate(val)
 end
 
 -- Optional. Set the slew time for the voice.
