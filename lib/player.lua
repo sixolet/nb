@@ -35,7 +35,7 @@ function player:pitch_bend(note, amount)
 end
 
 -- Optional. Modulate the voice, in whatever way seems best. Range 0-1.
-function player:modulate(attr, val)
+function player:modulate(val)
 end
 
 -- Optional. Callback for when a voice is used by at least one selector.
