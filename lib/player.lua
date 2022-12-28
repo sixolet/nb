@@ -55,10 +55,10 @@ end
 -- Optional. Callback for when a voice is used by at least one selector.
 -- Suggest using it to show parameters to control the voice.
 function player:active()
-    self.active = true
+    self.is_active = true
     self.active_routine = clock.run(function()
         clock.sleep(1)
-        if self.active then
+        if self.is_active then
             self:delayed_active()
         end
         self.active_routine = nil
@@ -73,7 +73,7 @@ end
 -- Optional. Callback for when a voice is no longer used. Useful for hiding
 -- parameters or whatnot.
 function player:inactive()
-    self.active = false
+    self.is_active = false
     if self.active_routine ~= nil then
         clock.cancel(self.active_routine)
     end

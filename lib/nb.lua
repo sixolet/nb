@@ -32,7 +32,7 @@ local function add_midi_players()
                 self.conn:note_on(note, util.clamp(math.floor(127*vel), 0, 127), self:ch())
             end
             function player:note_off(note)
-                self.conn:note_off(note, ch())
+                self.conn:note_off(note, self:ch())
             end
             function player:active()
                 params:show("midi_voice_"..i)
