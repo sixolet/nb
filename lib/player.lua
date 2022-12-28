@@ -34,13 +34,8 @@ end
 function player:pitch_bend(note, amount)
 end
 
--- Optional. Set attribute for the voice, if it is implemented.
-function player:set_attr(attr, val)
-end
-
--- Return the name of the default attribute for the voice. This may change
--- based on the settings of the voice; users should respect the current one.
-function player:default_attr()
+-- Optional. Modulate the voice, in whatever way seems best. Range 0-1.
+function player:modulate(attr, val)
 end
 
 -- Optional. Callback for when a voice is used by at least one selector.
