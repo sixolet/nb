@@ -20,15 +20,19 @@ local function add_midi_players()
                 conn = conn
             }
             function player:add_params()
-                params:add_group("midi_voice_"..i, "midi: "..v.name, 1)
+                params:add_group("midi_voice_"..i, "midi: "..v.name, 2)
                 params:add_number("midi_chan_"..i, "channel", 1, 16)
+                params:add_number("midi_modulation_cc_"..i, "modulation cc", 1, 127, 72)
                 params:hide("midi_voice_"..i)
             end
+            function player:ch()
+                return params:get("midi_chan_"..i)
+            end
             function player:note_on(note, vel)
-                self.conn:note_on(note, util.clamp(math.floor(127*vel), 0, 127))
+                self.conn:note_on(note, util.clamp(math.floor(127*vel), 0, 127), self:ch())
             end
             function player:note_off(note)
-                self.conn:note_off(note)
+                self.conn:note_off(note, ch())
             end
             function player:active()
                 params:show("midi_voice_"..i)
@@ -38,6 +42,17 @@ local function add_midi_players()
                 params:hide("midi_voice_"..i)
                 _menu.rebuild_params()
             end
+            function player:modulate(val)
+                self.conn:cc(params:get("midi_modulation_cc_"..i), util.clamp(math.floor(127*val), 0, 127), self:ch())
+            end
+            function player:describe()
+                return {
+                    name = "v.name",
+                    supports_bend = false,
+                    supports_slew = false,
+                    modulate_description = "cc "..params:get("midi_modulation_cc_"..i),
+                }
+            end            
             nb.players[v.name] = player
         end
     end
@@ -47,7 +62,6 @@ end
 function nb:init()
     nb_player_refcounts = {}
     add_midi_players()
-    nb_params_added = false
     self:stop_all()
 end
 
@@ -124,11 +138,15 @@ local function pairsByKeys (t, f)
 end
 
 function nb:add_player_params()
-    if nb_params_added then return end
+    if params.lookup['nb_sentinel_param'] then
+        return
+    end
     print("Add player params")
     for name, player in pairsByKeys(self:get_players()) do
         player:add_params()
     end
+    params:add_binary('nb_sentinel_param', 'nb_sentinel_param')
+    params:hide('nb_sentinel_param')
     nb_params_added = true
 end
 
