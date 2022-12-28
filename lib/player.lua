@@ -35,7 +35,21 @@ function player:pitch_bend(note, amount)
 end
 
 -- Optional. Modulate the voice, in whatever way seems best. Range 0-1.
-function player:modulate(val)
+function player:modulate(note, val)
+end
+
+-- Optional. Set the slew time for the voice.
+function player:set_slew(slew)
+end
+
+-- Recommended.  Describe the voice's capabilities.
+function player:describe()
+    return {
+        name = "none",
+        supports_bend = false,
+        supports_slew = false,
+        modulate_description = "unsupported",
+    }
 end
 
 -- Optional. Callback for when a voice is used by at least one selector.
