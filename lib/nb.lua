@@ -147,7 +147,6 @@ function nb:add_player_params()
     end
     params:add_binary('nb_sentinel_param', 'nb_sentinel_param')
     params:hide('nb_sentinel_param')
-    nb_params_added = true
 end
 
 -- Return all the players in an object by name. 
