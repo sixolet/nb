@@ -32,7 +32,7 @@ local function add_midi_players()
                         conn = conn
                     }
                     function player:add_params()
-                        params:add_group("midi_voice_" .. i .. '_' .. j, "midi "..j..": " .. v.name, 2)
+                        params:add_group("midi_voice_" .. i .. '_' .. j, "midi "..j..": " .. abbreviate(v.name), 2)
                         params:add_number("midi_chan_" .. i .. '_' .. j, "channel", 1, 16, 1)
                         params:add_number("midi_modulation_cc_" .. i .. '_' .. j, "modulation cc", 1, 127, 72)
                         params:hide("midi_voice_" .. i .. '_' .. j)
