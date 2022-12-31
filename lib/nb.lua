@@ -47,7 +47,7 @@ local function add_midi_players()
                     end
 
                     function player:note_off(note)
-                        self.conn:note_off(note, self:ch())
+                        self.conn:note_off(note, 0, self:ch())
                     end
 
                     function player:active()
