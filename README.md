@@ -25,6 +25,7 @@ nb:init() -- run this first, from your init method.
 
 ```
 nb:add_param("voice_id", "voice") -- adds a voice selector param to your script
+nb:add_player_params()
 ```
 
 ```
