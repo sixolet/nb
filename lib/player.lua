@@ -21,7 +21,10 @@ end
 
 -- Implement to do midi-style note-on. If you only implement play_note,
 -- you should implement a trivial note_on to call it.
-function player:note_on(note, vel)
+-- "properties" is an optional table of note mod properties. It should
+-- contain only keys that the vocie says it can modulate in note_mod_targets
+-- in the description.
+function player:note_on(note, vel, properties)
 end
 
 -- Implement to do midi-style note-off. This is optional if you implement
@@ -42,11 +45,20 @@ end
 function player:set_slew(slew)
 end
 
--- Optional. Modulate the note.
+-- Optional. Modulate the note. `key` should be present in note_mod_targets
+-- in the description. `value` should be between -1 and 1.
+-- Depending on the parameter, the voice may interperet modulation as either
+-- additive to, multiplicative of, or replacing any timbral properties.
+-- For example, modulating `amp` should multiply with the `amp` in properties, 
+-- but modulating a filter cutoff should be additive.
 function player:modulate_note(note, key, value)
 end
 
 -- Recommended.  Describe the voice's capabilities.
+-- Supported keys:
+-- supports_bend (does this voice support pitch bend?)
+-- supports_slew (does this voice support set_slew?)
+-- note_mod_targets (optional list of targets for "note mod")
 function player:describe()
     return {
         name = "none",
@@ -87,9 +99,10 @@ end
 function player:stop_all()
 end
 
--- Play a note for a given length
-function player:play_note(note, vel, length)
-    self:note_on(note, vel)
+-- Play a note for a given length. `properties` is optional, see note_on
+-- for further description.
+function player:play_note(note, vel, length, properties)
+    self:note_on(note, vel, properties)
     clock.run(function()
         clock.sleep(length*clock.get_beat_sec())
         self:note_off(note)
