@@ -42,6 +42,10 @@ end
 function player:set_slew(slew)
 end
 
+-- Optional. Modulate the note.
+function player:modulate_note(note, key, value)
+end
+
 -- Recommended.  Describe the voice's capabilities.
 function player:describe()
     return {
