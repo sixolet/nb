@@ -16,6 +16,10 @@ function init()
             clock.sync(1/32)
         end
     end)
+    clock.run(function()
+        clock.sleep(2)
+        params:bang()
+    end)
 end
 
 function g.key(x, y, z)
