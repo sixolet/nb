@@ -1,5 +1,13 @@
-local mydir = debug.getinfo(1).source:match("@?" .. _path.code .. "(.*/)")
+local mydir
+if norns then
+  mydir = debug.getinfo(1).source:match("@?" .. _path.code .. "(.*/)")
+elseif seamstress then
+  mydir = debug.getinfo(1).source:match("@?" .. seamstress.state.path .. "/(.*/)")
+end
 local player_lib = include(mydir .. "player")
+if seamstress and _menu == nil then
+  _menu = paramsMenu
+end
 local nb = {}
 
 if note_players == nil then
@@ -23,11 +31,24 @@ local abbreviate = function(s)
 end
 
 local function add_midi_players()
-    for i, v in ipairs(midi.vports) do
+    local devices
+    if norns then
+      devices = midi.vports
+    elseif seamstress then
+      devices = midi.outputs
+    end
+
+    for i, v in pairs(devices) do
+
         for j = 1, nb.voice_count do
             (function(i, j)
-                if v.connected then
-                    local conn = midi.connect(i)
+                  if seamstress or v.connected then
+                    local conn
+                    if norns then
+                      conn = midi.connect(i)
+                    elseif seamstress then
+                      conn = midi.connect_output(i)
+                    end
                     local player = {
                         conn = conn
                     }
