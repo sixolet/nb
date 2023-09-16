@@ -5,9 +5,6 @@ elseif seamstress then
   mydir = debug.getinfo(1).source:match("@?" .. seamstress.state.path .. "/(.*/)")
 end
 local player_lib = include(mydir .. "player")
-if seamstress and _menu == nil then
-  _menu = paramsMenu
-end
 local nb = {}
 
 if note_players == nil then
