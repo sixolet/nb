@@ -29,10 +29,10 @@ local abbreviate = function(s)
 end
 
 local function add_midi_players()
-  for i, v in ipairs(midi.vports) do
-    for j = 1, nb.voice_count do
+    for i, v in ipairs(midi.vports) do
+        for j = 1, nb.voice_count do
             (function(i, j)
-                  if v.connected then
+                if v.connected then
                     local conn = midi.connect(i)
                     local player = {
                         conn = conn
