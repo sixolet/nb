@@ -1,9 +1,9 @@
 local mydir
 if norns then
-  mydir = debug.getinfo(1).source:match("@?" .. _path.code .. "(.*/)")
+    mydir = debug.getinfo(1).source:match("@?" .. _path.code .. "(.*/)")
 elseif seamstress then
-  local escaped_script_path, _ = seamstress.state.path:gsub("[%(%)%.%+%-%*%?%[%]%^%$%%]", "%%%1")
-  mydir = debug.getinfo(1).source:match("@?" .. escaped_script_path .. "/(.*/)")
+    local escaped_script_path, _ = seamstress.state.path:gsub("[%(%)%.%+%-%*%?%[%]%^%$%%]", "%%%1")
+    mydir = debug.getinfo(1).source:match("@?" .. escaped_script_path .. "/(.*/)")
 end
 local player_lib = include(mydir .. "player")
 local nb = {}
@@ -30,14 +30,13 @@ end
 
 local function add_midi_players()
   for i, v in pairs(midi.vports) do
-
     for j = 1, nb.voice_count do
             (function(i, j)
                   if seamstress or v.connected then
                     local conn
                     conn = midi.connect(i)
                     local player = {
-                      conn = conn
+                        conn = conn
                     }
                     function player:add_params()
                         params:add_group("midi_voice_" .. i .. '_' .. j, "midi " .. j .. ": " .. abbreviate(v.name), 3)
