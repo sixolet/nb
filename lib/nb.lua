@@ -32,9 +32,8 @@ local function add_midi_players()
   for i, v in ipairs(midi.vports) do
     for j = 1, nb.voice_count do
             (function(i, j)
-                  if seamstress or v.connected then
-                    local conn
-                    conn = midi.connect(i)
+                  if v.connected then
+                    local conn = midi.connect(i)
                     local player = {
                         conn = conn
                     }
