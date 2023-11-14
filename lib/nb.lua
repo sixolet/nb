@@ -29,7 +29,7 @@ local abbreviate = function(s)
 end
 
 local function add_midi_players()
-  for i, v in pairs(midi.vports) do
+  for i, v in ipairs(midi.vports) do
     for j = 1, nb.voice_count do
             (function(i, j)
                   if seamstress or v.connected then
