@@ -2,7 +2,8 @@ local mydir
 if norns then
   mydir = debug.getinfo(1).source:match("@?" .. _path.code .. "(.*/)")
 elseif seamstress then
-  mydir = debug.getinfo(1).source:match("@?" .. seamstress.state.path .. "/(.*/)")
+  local escaped_script_path, _ = seamstress.state.path:gsub("[%(%)%.%+%-%*%?%[%]%^%$%%]", "%%%1")
+  mydir = debug.getinfo(1).source:match("@?" .. escaped_script_path .. "/(.*/)")
 end
 local player_lib = include(mydir .. "player")
 local nb = {}
