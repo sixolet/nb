@@ -68,6 +68,7 @@ end
 -- supports_bend (does this voice support pitch bend?)
 -- supports_slew (does this voice support set_slew?)
 -- note_mod_targets (optional list of targets for "note mod")
+-- params (optional list of parameter IDs for lookup use in scripts)
 function player:describe()
     return {
         name = "none",
@@ -76,6 +77,7 @@ function player:describe()
         modulate_description = "unsupported",
         note_mod_targets = {},
         voice_mod_tarets = {},
+        params = {},
     }
 end
 
